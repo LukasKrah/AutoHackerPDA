@@ -1,0 +1,6 @@
+In all 4 turn positions
+Check powering
+For all powering:
+ - Start function
+
+Make a list[list[int]] with the turns - DEEPCOPY at start
