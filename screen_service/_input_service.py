@@ -1,7 +1,7 @@
 """
 screen_service/_input_service.py
 
-Project: NextLevelHackerPDA
+Project: AutoHackerPDA
 Created: 18.04.2023
 Author: Lukas Krahbichler
 """
@@ -10,9 +10,6 @@ Author: Lukas Krahbichler
 #                    Imports                     #
 ##################################################
 
-
-from time import sleep
-import autoit
 import numpy as np
 import pyautogui
 import cv2
@@ -22,22 +19,21 @@ import cv2
 #                     Code                       #
 ##################################################
 
-class _InputService:
+class InputService:
     """
-    Input things from screen
+    Input something from the screen
     """
 
-    def __init__(self):
-        ...
-
-    def screenshot(self) -> np.ndarray:
+    @staticmethod
+    def screenshot() -> np.ndarray:
         return cv2.cvtColor(np.array(pyautogui.screenshot()), cv2.COLOR_BGR2GRAY)
         # img = cv2.imread("imgs/screen.png")
         # return np.array(cv2.cvtColor(img, cv2.COLOR_BGR2GRAY))
 
-    def pda_whole(self) -> np.ndarray:
+    @classmethod
+    def pda_whole(cls) -> np.ndarray:
         # 640, 280 - 1250, 830
-        screen: np.ndarray = self.screenshot()
+        screen: np.ndarray = cls.screenshot()
 
         height: int
         width: int
@@ -50,19 +46,21 @@ class _InputService:
 
         return screen[y_top:y_bot, x_left:x_right]
 
-    def pda_io(self) -> list[list[np.ndarray]]:
-        pdas: list[list[np.ndarray]] = self.pda_single(0, 1, 20, 8)
+    @classmethod
+    def pda_io(cls) -> list[list[np.ndarray]]:
+        pdas: list[list[np.ndarray]] = cls.pda_single(0, 1, 20, 8)
 
         return [[row[0] for row in pdas], [row[-1] for row in pdas]]
 
+    @classmethod
     def pda_single(
-            self,
+            cls,
             cut_left: int | None = 40,
             cut_right: int | None = 30,
             pad_x: int | None = 8,
             pad_y: int | None = 8
     ) -> list[list[np.ndarray]]:
-        pda: np.ndarray = self.pda_whole()[:, cut_left:-cut_right]
+        pda: np.ndarray = cls.pda_whole()[:, cut_left:-cut_right]
 
         PAD_X: int = pad_x
         PAD_Y: int = pad_y
@@ -79,26 +77,3 @@ class _InputService:
             pdas.append(row_list)
 
         return pdas
-
-    def pad_clicks(self, click: dict[tuple[int, int], int]) -> None:
-        width: int
-        height: int
-        width, height = pyautogui.size()
-
-        x_left: int = (width // 3) + 40
-        x_right: int = int(width / 1.536) - 30
-        y_top: int = int(height / 3.85714)
-        y_bot: int = int(height / 1.30120)
-
-        field_width = (x_right - x_left) // 8
-        field_height = (y_bot - y_top) // 8
-
-        for row, col in click:
-            x: int = x_left + (field_width * col) + (field_width // 2)
-            y: int = y_top + (field_height * row) + (field_height // 2)
-            for i in range(click[(row, col)]):
-                autoit.mouse_click("left", x, y, speed=0)
-                sleep(0.02)
-
-
-InputService = _InputService()

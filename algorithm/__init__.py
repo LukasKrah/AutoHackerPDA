@@ -1,7 +1,7 @@
 """
 algorithm/__init__.py
 
-Project: NextLevelHackerPDA
+Project: AutoHackerPDA
 Created: 19.04.2023
 Author: Lukas Krahbichler
 """

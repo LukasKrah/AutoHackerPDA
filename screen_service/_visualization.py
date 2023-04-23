@@ -1,18 +1,19 @@
 """
 screen_service/_visualization.py
 
-Project: NextLevelHackerPDA
+Project: AutoHackerPDA
 Created: 18.04.2023
 Author: Lukas Krahbichler
 """
-import numpy as np
+
 ##################################################
 #                    Imports                     #
 ##################################################
 
+from tkinter import Tk, Canvas
 from PIL import Image, ImageTk
-from tkinter import Tk, Label, Canvas
 from typing import Any
+import numpy as np
 
 
 ##################################################
@@ -77,7 +78,6 @@ class _Window(Tk):
 
                 if io_ports:
                     if col == 0 and row == io_ports[0]:
-                        print("DRAW")
                         can.create_line(0, 0, 0, height, fill="green", width=15)
 
                     if col == len(image_row)-1 and row == io_ports[1]:
@@ -89,4 +89,3 @@ class _Window(Tk):
 
 
 Window = _Window()
-

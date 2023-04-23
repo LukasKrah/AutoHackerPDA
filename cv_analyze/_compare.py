@@ -1,7 +1,7 @@
 """
-ai_analyze/_compare.py
+cv_analyze/_compare.py
 
-Project: NextLevelHackerPDA
+Project: AutoHackerPDA
 Created: 18.04.2023
 Author: Lukas Krahbichler
 """
