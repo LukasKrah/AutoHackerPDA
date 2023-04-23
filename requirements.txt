@@ -1,8 +1,8 @@
-numpy
 opencv-python
-pygame
-Pillow
 PyAutoGUI
+keyboard
+pygame
 future
-pynput
+Pillow
 autoit
+numpy
